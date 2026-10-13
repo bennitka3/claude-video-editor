@@ -8,3 +8,7 @@ renders/
 node_modules/
 .hyperframes/
 .DS_Store
+
+# per-video project files live in the shared project folder, not git
+projects/*
+!projects/.gitkeep

@@ -22,7 +22,7 @@ editor: precise timing, pacing and style feedback. Keep explanations plain; ben 
 styles/<style>/frame.md      # one visual style per folder; HyperFrames reads frame.md as the brand spec
 .claude/skills/<name>/       # ben's own video skills, built on top of HyperFrames
 templates/<name>/            # finished compositions worth reusing as a starting point
-projects/<name>/             # working compositions (source only; renders are git-ignored)
+projects/<name>/             # scratch build folder, git-ignored; project files are kept in the shared project folder
 setup/cloud-setup.sh         # the project cloud environment's setup script
 ```
 
@@ -32,12 +32,16 @@ setup/cloud-setup.sh         # the project cloud environment's setup script
 2. Build in `projects/<short-name>/`. Start from a template when one fits.
 3. Run `npx hyperframes check` until it passes, look at snapshots, then render.
 4. Deliver the render through `/mnt/project-files/videos/<short-name>/` so ben can open it from the thread.
-   Commit the source (not the render) when ben is happy with it.
-5. **Say what was saved to the repo.** Several people may use this repo, and anyone with access can see what's in
-   it. Whenever Claude commits project files (compositions, edit decisions, snapshots, graphics source), the
-   reply that reports it lists the folder and files saved, the branch, and a link to the commit or PR. Never
-   commit something without saying so; if a file might be private (client material, people's faces, unreleased
-   work), ask before saving it.
+5. **Project files never go in git** (ben, 2026-10-13). Compositions, edit scripts, cut lists and graphics source
+   are kept in the shared project folder at `/mnt/project-files/projects/<short-name>/`, where every cloud thread
+   can read them for revisions. To revise, copy that folder into `projects/<short-name>/`, edit, and copy the
+   changed source back. Snapshots, renders and footage are not kept there; they are scratch.
+   Edits done on ben's Mac keep their project files next to the output there, and the thread copies the source
+   files (not footage or renders) into the shared project folder when the edit is done.
+6. **Say what was saved and where.** Several people may use this project. Whenever Claude saves project files
+   (shared project folder) or commits anything to the repo (styles, skills, templates), the reply that reports it
+   lists the folder and files saved, plus the branch and a commit or PR link for the repo. Never save something
+   without saying so; if a file might be private (client material, people's faces, unreleased work), ask first.
 
 Deliverable defaults (ben can override):
 

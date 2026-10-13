@@ -1,0 +1,10 @@
+# renders and media stay out of git
+*.mp4
+*.mov
+*.webm
+*.wav
+*.mp3
+renders/
+node_modules/
+.hyperframes/
+.DS_Store

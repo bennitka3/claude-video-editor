@@ -33,6 +33,11 @@ setup/cloud-setup.sh         # the project cloud environment's setup script
 3. Run `npx hyperframes check` until it passes, look at snapshots, then render.
 4. Deliver the render through `/mnt/project-files/videos/<short-name>/` so ben can open it from the thread.
    Commit the source (not the render) when ben is happy with it.
+5. **Say what was saved to the repo.** Several people may use this repo, and anyone with access can see what's in
+   it. Whenever Claude commits project files (compositions, edit decisions, snapshots, graphics source), the
+   reply that reports it lists the folder and files saved, the branch, and a link to the commit or PR. Never
+   commit something without saying so; if a file might be private (client material, people's faces, unreleased
+   work), ask before saving it.
 
 Deliverable defaults (ben can override):
 

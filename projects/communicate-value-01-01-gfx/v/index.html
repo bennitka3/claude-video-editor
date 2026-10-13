@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>01_01 vertical, ben's graphics</title>
+    <script src="gsap.min.js"></script>
+    <style>
+      body { margin: 0; background: #1f1f1f; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #1f1f1f; }
+      #cam { position: absolute; inset: 0; transform-origin: 47% 27%; }
+      #a-roll { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .gw { position: absolute; inset: 0; }
+      .gf { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #fade { position: absolute; inset: 0; background: #000; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="144.63">
+      <div id="cam">
+        <video id="a-roll" class="clip" src="assets/cut.mp4" playsinline data-has-audio="true" data-start="0" data-duration="144.63" data-track-index="0" data-volume="1"></video>
+      </div>
+      <div class="gw" id="g-title">
+        <video id="v-title" class="clip gf" src="assets/retimed/v_title.mov" muted playsinline data-start="0.0" data-duration="3.6" data-track-index="10"></video>
+      </div>
+      <div class="gw" id="g-emotions">
+        <video id="v-emotions" class="clip gf" src="assets/retimed/v_emotions.mov" muted playsinline data-start="15.6" data-duration="7.0" data-track-index="11"></video>
+      </div>
+      <div class="gw" id="g-lesson">
+        <video id="v-lesson" class="clip gf" src="assets/retimed/v_lesson.mov" muted playsinline data-start="29.6" data-duration="5.0" data-track-index="12"></video>
+      </div>
+      <div class="gw" id="g-deeper1">
+        <video id="v-deeper1" class="clip gf" src="assets/retimed/v_deeper1.mov" muted playsinline data-start="42.25" data-duration="5.75" data-track-index="13"></video>
+      </div>
+      <div class="gw" id="g-deeper2">
+        <video id="v-deeper2" class="clip gf" src="assets/retimed/v_deeper2.mov" muted playsinline data-start="49.3" data-duration="4.7" data-track-index="14"></video>
+      </div>
+      <div class="gw" id="g-deeper3">
+        <video id="v-deeper3" class="clip gf" src="assets/retimed/v_deeper3.mov" muted playsinline data-start="56.5" data-duration="4.5" data-track-index="15"></video>
+      </div>
+      <div class="gw" id="g-deeper4">
+        <video id="v-deeper4" class="clip gf" src="assets/retimed/v_deeper4.mov" muted playsinline data-start="63.6" data-duration="5.9" data-track-index="16"></video>
+      </div>
+      <div class="gw" id="g-funnel">
+        <video id="v-funnel" class="clip gf" src="assets/retimed/v_funnel.mov" muted playsinline data-start="81.5" data-duration="6.0" data-track-index="17"></video>
+      </div>
+      <div class="gw" id="g-carts">
+        <video id="v-carts" class="clip gf" src="assets/retimed/v_carts.mov" muted playsinline data-start="105.1" data-duration="8.7" data-track-index="18"></video>
+      </div>
+      <div class="gw" id="g-yes">
+        <video id="v-yes" class="clip gf" src="assets/retimed/v_yes.mov" muted playsinline data-start="117.6" data-duration="5.4" data-track-index="19"></video>
+      </div>
+      <div class="gw" id="g-ear">
+        <video id="v-ear" class="clip gf" src="assets/retimed/v_ear.mov" muted playsinline data-start="140.6" data-duration="4.03" data-track-index="20"></video>
+      </div>
+      <div id="fade"></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      const poses = [[0.0, 10.1, 1.0, 1.05, 0.5, -0.5], [10.1, 15.45, 1.16, 1.21, -0.5, 0.5], [15.45, 29.75, 1.0, 1.05, 0, 0], [29.75, 36.7, 1.16, 1.21, 0.5, -0.5], [36.7, 43.6, 1.0, 1.05, -0.5, 0.5], [43.6, 49.65, 1.16, 1.21, 0, 0], [49.65, 56.85, 1.0, 1.05, 0.5, -0.5], [56.85, 63.95, 1.16, 1.21, -0.5, 0.5], [63.95, 75.6, 1.0, 1.05, 0, 0], [75.6, 123.93, 1.16, 1.21, 0.5, -0.5], [123.93, 134.68, 1.0, 1.05, -0.5, 0.5], [134.68, 140.63, 1.16, 1.21, 0, 0], [140.63, 144.63, 1.0, 1.05, 0.5, -0.5]];
+      poses.forEach(([a, b, s0, s1, x0, x1]) => {
+        tl.set("#cam", { scale: s0, xPercent: x0 }, a);
+        tl.to("#cam", { scale: s1, xPercent: x1, duration: b - a, ease: "sine.inOut" }, a);
+      });
+      tl.fromTo("#fade", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 144.13);
+
+      tl.to("#g-title", {opacity: 0, duration: 0.25, ease: "power1.in"}, 3.35);
+      tl.fromTo("#g-emotions", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 15.6);
+      tl.to("#g-emotions", {opacity: 0, duration: 0.25, ease: "power1.in"}, 22.35);
+      tl.fromTo("#g-lesson", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 29.6);
+      tl.to("#g-lesson", {opacity: 0, duration: 0.25, ease: "power1.in"}, 34.35);
+      tl.fromTo("#g-deeper1", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 42.25);
+      tl.to("#g-deeper1", {opacity: 0, duration: 0.25, ease: "power1.in"}, 47.75);
+      tl.fromTo("#g-deeper2", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 49.3);
+      tl.to("#g-deeper2", {opacity: 0, duration: 0.25, ease: "power1.in"}, 53.75);
+      tl.fromTo("#g-deeper3", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 56.5);
+      tl.to("#g-deeper3", {opacity: 0, duration: 0.25, ease: "power1.in"}, 60.75);
+      tl.fromTo("#g-deeper4", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 63.6);
+      tl.to("#g-deeper4", {opacity: 0, duration: 0.25, ease: "power1.in"}, 69.25);
+      tl.fromTo("#g-funnel", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 81.5);
+      tl.to("#g-funnel", {opacity: 0, duration: 0.25, ease: "power1.in"}, 87.25);
+      tl.fromTo("#g-carts", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 105.1);
+      tl.to("#g-carts", {opacity: 0, duration: 0.25, ease: "power1.in"}, 113.55);
+      tl.fromTo("#g-yes", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 117.6);
+      tl.to("#g-yes", {opacity: 0, duration: 0.25, ease: "power1.in"}, 122.75);
+      tl.fromTo("#g-ear", {opacity: 0, scale: 1.04}, {opacity: 1, scale: 1, duration: 0.3, ease: "power2.out"}, 140.6);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

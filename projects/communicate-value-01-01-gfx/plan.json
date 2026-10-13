@@ -1,0 +1,32 @@
+{
+  "_about": "Where each of ben's 04_GFX graphics sits on the 01_01 cut (times are seconds on the cut timeline). Each graphic plays from its own start; a piece [at, from, to] plays the graphic file from `from` to `to` starting at `at`, then holds the last frame until the next piece or `out`. Leave `to` off to play until `out`. Edit times here and run build.py to rebuild both versions.",
+  "duration": 144.63,
+  "footage": "/Volumes/madecraft/mc-vip/2511_COMMUNICATE_VALUE_AND_NAVIGATE_OBJECTIONS_ON_THE_SPOT/01_SOURCE/02_LA/Final Videos/01_01.MOV",
+  "cut_file": "../communicate-value-01-01/assets/cut.mp4",
+  "cut_ranges": "../communicate-value-01-01/segments.json",
+  "gfx_dir": "/Volumes/madecraft/mc-vip/2511_COMMUNICATE_VALUE_AND_NAVIGATE_OBJECTIONS_ON_THE_SPOT/01_SOURCE/04_GFX",
+  "h": [
+    { "id": "title",    "file": "HORIZONTAL/2511_01_01_A.mov", "in": 0.0,   "out": 7.0 },
+    { "id": "emotions", "file": "HORIZONTAL/2511_01_01_C.mov", "in": 15.6,  "out": 25.3 },
+    { "id": "lesson",   "file": "HORIZONTAL/2511_01_01_E.mov", "in": 29.6,  "out": 36.3 },
+    { "id": "deeper",   "file": "HORIZONTAL/2511_01_01_F.mov", "in": 36.8,  "out": 75.4,
+      "pieces": [[36.8, 0, 1.2], [43.7, 1.2, 2.17], [49.65, 2.17, 3.17], [56.85, 3.17, 4.17], [63.95, 4.17, 4.6]] },
+    { "id": "funnel",   "file": "HORIZONTAL/2511_01_01_N.mov", "in": 80.8,  "out": 88.2 },
+    { "id": "carts",    "file": "HORIZONTAL/2511_01_01_S.mov", "in": 98.0,  "out": 117.3 },
+    { "id": "yes",      "file": "HORIZONTAL/2511_01_01_W.mov", "in": 117.6, "out": 123.8 },
+    { "id": "ear",      "file": "HORIZONTAL/2511_01_01_X.mov", "in": 140.6, "out": 144.63 }
+  ],
+  "v": [
+    { "id": "title",    "file": "VERTICAL/2511_01_01_A.mov", "in": 0.0,   "out": 3.6 },
+    { "id": "emotions", "file": "VERTICAL/2511_01_01_C.mov", "in": 15.6,  "out": 22.6 },
+    { "id": "lesson",   "file": "VERTICAL/2511_01_01_E.mov", "in": 29.6,  "out": 34.6 },
+    { "id": "deeper1",  "file": "VERTICAL/2511_01_01_F.mov", "in": 42.25, "out": 48.0, "pieces": [[42.25, 0, 1.8]] },
+    { "id": "deeper2",  "file": "VERTICAL/2511_01_01_F.mov", "in": 49.3,  "out": 54.0, "pieces": [[49.3, 2.383, 3.0]] },
+    { "id": "deeper3",  "file": "VERTICAL/2511_01_01_F.mov", "in": 56.5,  "out": 61.0, "pieces": [[56.5, 3.617, 4.25]] },
+    { "id": "deeper4",  "file": "VERTICAL/2511_01_01_F.mov", "in": 63.6,  "out": 69.5, "pieces": [[63.6, 4.85, 5.5]] },
+    { "id": "funnel",   "file": "VERTICAL/2511_01_01_N.mov", "in": 81.5,  "out": 87.5 },
+    { "id": "carts",    "file": "VERTICAL/2511_01_01_S.mov", "in": 105.1, "out": 113.8 },
+    { "id": "yes",      "file": "VERTICAL/2511_01_01_W.mov", "in": 117.6, "out": 123.0 },
+    { "id": "ear",      "file": "VERTICAL/2511_01_01_X.mov", "in": 140.6, "out": 144.63 }
+  ]
+}

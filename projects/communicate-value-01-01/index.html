@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Get to the Real Need</title>
+    <script src="gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #141414;
+        --surface: #1c1c1f;
+        --surface-2: #2a2a2c;
+        --text: #ffffff;
+        --soft: #bbbbbb;
+        --accent: #f79857;
+        --mint: #68d8b3;
+        --mint-ink: #006e2c;
+        --pink: #f3b2d9;
+        --pink-ink: #dc4a9c;
+        --grad: linear-gradient(90deg, #f7d973 0%, #68efc0 39%, #41b0f6 74%, #9b4ffe 100%);
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Open Sans", sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      #cam {
+        position: absolute;
+        inset: 0;
+        transform-origin: 47% 27%;
+      }
+      #a-roll {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(20, 20, 20, 0) 45%, rgba(20, 20, 20, 0.55) 100%);
+      }
+      .g {
+        position: absolute;
+        left: 56px;
+        right: 56px;
+        bottom: 170px;
+      }
+      .card {
+        background: rgba(28, 28, 31, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 32px;
+        padding: 48px 56px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+      .kicker {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 18px;
+      }
+      .head {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 68px;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      .head em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .body {
+        font-size: 40px;
+        line-height: 1.35;
+        color: var(--soft);
+        margin: 22px 0 0;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 52px;
+        margin: 0;
+        padding: 14px 0;
+      }
+      .row + .row {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .ico {
+        flex: 0 0 72px;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ico svg {
+        width: 40px;
+        height: 40px;
+      }
+      .ico.ok {
+        background: var(--mint);
+      }
+      .ico.no {
+        background: var(--pink);
+      }
+      .ico.num {
+        background: var(--accent);
+        color: #141414;
+        font-size: 40px;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 30px;
+      }
+      .chip {
+        display: block;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 38px;
+        border-radius: 999px;
+        padding: 16px 34px;
+        color: #141414;
+      }
+      .chip.mint {
+        background: var(--mint);
+      }
+      .chip.pink {
+        background: var(--pink);
+      }
+      .chip.orange {
+        background: var(--accent);
+      }
+      .chip.ghost {
+        background: var(--surface-2);
+        color: var(--soft);
+      }
+      .strike {
+        position: relative;
+      }
+      .strike .line {
+        position: absolute;
+        left: -6px;
+        right: -6px;
+        top: 52%;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--pink-ink);
+        transform-origin: left center;
+      }
+      .quote {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 58px;
+        line-height: 1.14;
+        letter-spacing: -0.015em;
+        margin: 0;
+      }
+      .qtop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 26px;
+      }
+      .dots {
+        display: flex;
+        gap: 12px;
+      }
+      .dot {
+        display: block;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--surface-2);
+      }
+      .dot.on {
+        background: var(--accent);
+      }
+      .reveals {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 34px;
+        font-size: 34px;
+        color: var(--soft);
+      }
+      .stat {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+      .big {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 190px;
+        line-height: 1;
+        color: var(--accent);
+        letter-spacing: -0.04em;
+      }
+      .timer {
+        position: relative;
+        flex: 0 0 210px;
+        width: 210px;
+        height: 210px;
+      }
+      .timer svg {
+        width: 210px;
+        height: 210px;
+        transform: rotate(-90deg);
+      }
+      .timer .t {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 62px;
+      }
+      #progress {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+      #progress-fill {
+        position: absolute;
+        inset: 0;
+        background: var(--grad);
+        transform-origin: left center;
+      }
+      #end {
+        position: absolute;
+        inset: 0;
+        background: var(--bg);
+      }
+      #end-inner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 80px;
+      }
+      #end .head {
+        font-size: 96px;
+      }
+      #end .bar {
+        width: 220px;
+        height: 10px;
+        border-radius: 5px;
+        background: var(--grad);
+        margin: 48px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="147.2">
+      <!-- A-roll: the cut footage (13 kept ranges of 01_01.MOV, dead air and retakes removed) -->
+      <div id="cam">
+        <video id="a-roll" class="clip" src="assets/cut.mp4" playsinline data-has-audio="true" data-start="0" data-duration="144.63" data-track-index="0" data-volume="1"></video>
+      </div>
+      <div id="vignette"></div>
+
+      <!-- 1. Title -->
+      <div id="g-title" class="g clip" data-start="0.2" data-duration="3.4" data-track-index="2">
+        <div class="card in">
+          <p class="kicker">Lesson 1</p>
+          <h1 class="head">Get to the <em>real need</em></h1>
+        </div>
+      </div>
+
+      <!-- 2. The problem -->
+      <div id="g-problem" class="g clip" data-start="3.7" data-duration="6.3" data-track-index="2">
+        <div class="card in">
+          <div class="row r1"><span class="ico ok"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>Great product</div>
+          <div class="row r2"><span class="ico ok"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>Competitive price</div>
+          <div class="row r3"><span class="ico no"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" /></svg></span>Still losing deals</div>
+        </div>
+      </div>
+
+      <!-- 3. How buyers decide -->
+      <div id="g-buyers" class="g clip" data-start="15.6" data-duration="9.6" data-track-index="2">
+        <div class="card in">
+          <p class="kicker">Buyers decide on</p>
+          <div class="chips">
+            <span class="chip orange c1">Emotions</span>
+            <span class="chip mint c2">Underlying needs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Lost in the pitch -->
+      <div id="g-lost" class="g clip" data-start="25.5" data-duration="4.0" data-track-index="2">
+        <div class="card in">
+          <h2 class="head" style="font-size: 58px">…but it gets lost in the <em>excitement of the pitch</em></h2>
+        </div>
+      </div>
+
+      <!-- 5. Shallow vs deep -->
+      <div id="g-deep" class="g clip" data-start="36.8" data-duration="6.7" data-track-index="2">
+        <div class="card in">
+          <div class="row s1" style="color: var(--soft)"><span class="strike">Shallow questions<span class="line"></span></span></div>
+          <div class="row s2"><span class="ico ok"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6" /></svg></span>Deep questions</div>
+          <p class="body s3">Ask questions that get <span style="color: var(--text); font-weight: 700">a paragraph in return.</span></p>
+        </div>
+      </div>
+
+      <!-- 6–9. Four deep questions -->
+      <div id="g-q1" class="g clip" data-start="43.7" data-duration="5.85" data-track-index="2">
+        <div class="card in">
+          <div class="qtop"><p class="kicker" style="margin: 0">Deep question 1 of 4</p><div class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <p class="quote">“What’s prompting you to consider a change now?”</p>
+          <div class="reveals rv">Reveals <span class="chip mint">Underlying motives</span></div>
+        </div>
+      </div>
+      <div id="g-q2" class="g clip" data-start="49.65" data-duration="7.1" data-track-index="2">
+        <div class="card in">
+          <div class="qtop"><p class="kicker" style="margin: 0">Deep question 2 of 4</p><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <p class="quote">“What alternatives have you considered?”</p>
+          <div class="reveals rv">Reveals <span class="chip mint">The competition</span></div>
+        </div>
+      </div>
+      <div id="g-q3" class="g clip" data-start="56.85" data-duration="7.0" data-track-index="2">
+        <div class="card in">
+          <div class="qtop"><p class="kicker" style="margin: 0">Deep question 3 of 4</p><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div></div>
+          <p class="quote">“Walk me through your buying process.”</p>
+          <div class="reveals rv">Reveals <span class="chip mint">Hidden decision makers</span></div>
+        </div>
+      </div>
+      <div id="g-q4" class="g clip" data-start="63.95" data-duration="11.5" data-track-index="2">
+        <div class="card in">
+          <div class="qtop"><p class="kicker" style="margin: 0">Deep question 4 of 4</p><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div></div>
+          <p class="quote">“What’s the impact of <em style="font-style: normal; color: var(--accent)">not</em> changing for six months?”</p>
+          <div class="reveals rv">Reveals <span class="chip mint">How serious they are</span></div>
+        </div>
+      </div>
+
+      <!-- 10. The interview story -->
+      <div id="g-keys" class="g clip" data-start="77.6" data-duration="4.0" data-track-index="2">
+        <div class="card in">
+          <p class="kicker">The interview question</p>
+          <h2 class="head">“What are the <em>5 keys</em> to effective selling?”</h2>
+        </div>
+      </div>
+      <div id="g-half" class="g clip" data-start="81.7" data-duration="4.7" data-track-index="2">
+        <div class="card in stat">
+          <span class="big">½</span>
+          <div>
+            <p class="head" style="font-size: 54px">forgot to mention</p>
+            <span class="chip mint" style="display: inline-block; margin-top: 18px">Client needs</span>
+          </div>
+        </div>
+      </div>
+      <div id="g-roleplay" class="g clip" data-start="86.6" data-duration="8.8" data-track-index="2">
+        <div class="card in stat">
+          <div class="timer">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="#2a2a2c" stroke-width="9" /><circle id="ring" cx="50" cy="50" r="44" fill="none" stroke="#f79857" stroke-width="9" stroke-linecap="round" stroke-dasharray="276.46" stroke-dashoffset="0" /></svg>
+            <div class="t" id="secs">60s</div>
+          </div>
+          <div>
+            <p class="kicker">Role play</p>
+            <p class="head" style="font-size: 62px">“Sell me <em>sunglasses</em>.”</p>
+          </div>
+        </div>
+      </div>
+      <div id="g-features" class="g clip" data-start="95.5" data-duration="9.5" data-track-index="2">
+        <div class="card in">
+          <p class="kicker" style="color: var(--pink)">Most pitched features</p>
+          <div class="chips">
+            <span class="chip ghost f1 strike">UV protection<span class="line"></span></span>
+            <span class="chip ghost f2 strike">Warm tint<span class="line"></span></span>
+          </div>
+        </div>
+      </div>
+      <div id="g-best" class="g clip" data-start="105.1" data-duration="12.3" data-track-index="2">
+        <div class="card in">
+          <p class="kicker" style="color: var(--mint)">The best asked about needs</p>
+          <div class="row b1"><span class="ico num" style="background: var(--mint)">!</span>The buyer is blind</div>
+          <div class="row b2"><span class="ico ok"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>Real need: cover my eyes</div>
+        </div>
+      </div>
+      <div id="g-probe" class="g clip" data-start="117.6" data-duration="6.2" data-track-index="2">
+        <div class="card in">
+          <h2 class="head" style="font-size: 62px"><em>Quality, probing questions</em> move the sale forward.</h2>
+        </div>
+      </div>
+
+      <!-- 11–12. Next sales call -->
+      <div id="g-next" class="g clip" data-start="124.1" data-duration="16.4" data-track-index="2">
+        <div class="card in">
+          <p class="kicker">On your next sales call</p>
+          <div class="row n1" style="font-size: 46px"><span class="ico num">1</span>Take time to understand them</div>
+          <div class="row n2" style="font-size: 46px"><span class="ico num">2</span>Learn how they buy</div>
+          <div class="row n3" style="font-size: 46px"><span class="ico num">3</span>Don’t rush it</div>
+        </div>
+      </div>
+
+      <!-- 13. Two ears, one mouth -->
+      <div id="g-ears" class="g clip" data-start="141.5" data-duration="3.2" data-track-index="2">
+        <div class="card in">
+          <h2 class="head"><em>Two</em> ears. <em>One</em> mouth.</h2>
+        </div>
+      </div>
+
+      <!-- End card -->
+      <div id="end" class="clip" data-start="144.4" data-duration="2.8" data-track-index="3">
+        <div id="end-inner">
+          <p class="kicker">Lesson 1 takeaway</p>
+          <h2 class="head">Listen more than you <em>pitch</em>.</h2>
+          <div class="bar"></div>
+          <p class="body" style="margin: 0">Find the real need first.</p>
+        </div>
+      </div>
+
+      <div id="progress"><div id="progress-fill"></div></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const DUR = 147.2;
+
+      // ---- Camera: a punch change on every cut, a slow push inside every segment ----
+      // [start, end, scaleFrom, scaleTo, xFrom%, xTo%]
+      const poses = [
+        [0, 10.1, 1.0, 1.06, 0, -0.6],
+        [10.1, 15.45, 1.22, 1.27, 0.5, 0],
+        [15.45, 29.75, 1.06, 1.13, -0.4, 0.4],
+        [29.75, 36.7, 1.2, 1.25, 0, -0.5],
+        [36.7, 43.6, 1.04, 1.1, 0.4, 0],
+        [43.6, 49.65, 1.15, 1.19, 0, 0.5],
+        [49.65, 56.85, 1.06, 1.1, -0.4, 0],
+        [56.85, 63.95, 1.16, 1.2, 0, -0.5],
+        [63.95, 75.6, 1.04, 1.12, 0.4, -0.2],
+        [75.6, 86.5, 1.0, 1.07, 0, 0.5],
+        [86.5, 95.5, 1.17, 1.21, 0, -0.4],
+        [95.5, 105.1, 1.05, 1.1, -0.3, 0.3],
+        [105.1, 112.2, 1.18, 1.23, 0, 0],
+        [112.2, 117.5, 1.32, 1.35, 0, 0],
+        [117.5, 123.93, 1.08, 1.12, 0.3, -0.3],
+        [123.93, 134.68, 1.12, 1.19, 0, 0.5],
+        [134.68, 140.63, 1.04, 1.1, 0.4, 0],
+        [140.63, 144.63, 1.24, 1.32, 0, 0],
+      ];
+      poses.forEach(([a, b, s0, s1, x0, x1]) => {
+        tl.set("#cam", { scale: s0, xPercent: x0 }, a);
+        tl.to("#cam", { scale: s1, xPercent: x1, duration: b - a, ease: "sine.inOut" }, a);
+      });
+
+      // ---- Graphics helpers (global times) ----
+      const enter = (sel, t) => tl.fromTo(sel, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, t);
+      const exit = (sel, t) => tl.to(sel, { y: -24, opacity: 0, duration: 0.3, ease: "power2.in" }, t);
+      const pop = (sel, t) => tl.fromTo(sel, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.8)" }, t);
+      const rise = (sel, t) => tl.fromTo(sel, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t);
+      const strike = (sel, t) => tl.fromTo(sel, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.out" }, t);
+      const card = (id, a, b) => {
+        enter(`#${id} .in`, a);
+        exit(`#${id} .in`, b - 0.3);
+      };
+
+      card("g-title", 0.2, 3.6);
+
+      card("g-problem", 3.7, 10.0);
+      rise("#g-problem .r1", 3.8);
+      rise("#g-problem .r2", 4.4);
+      rise("#g-problem .r3", 5.4);
+      tl.fromTo("#g-problem .r3 .ico", { scale: 0.6 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 5.5);
+
+      card("g-buyers", 15.6, 25.2);
+      pop("#g-buyers .c1", 18.5);
+      pop("#g-buyers .c2", 19.9);
+
+      card("g-lost", 25.5, 29.5);
+
+      card("g-deep", 36.8, 43.5);
+      strike("#g-deep .s1 .line", 38.4);
+      tl.to("#g-deep .s1", { opacity: 0.45, duration: 0.3 }, 38.6);
+      rise("#g-deep .s2", 39.6);
+      rise("#g-deep .s3", 41.4);
+
+      const qs = [
+        ["g-q1", 43.7, 49.55, 47.2],
+        ["g-q2", 49.65, 56.75, 53.4],
+        ["g-q3", 56.85, 63.85, 60.2],
+        ["g-q4", 63.95, 75.45, 70.6],
+      ];
+      qs.forEach(([id, a, b, r]) => {
+        card(id, a, b);
+        rise(`#${id} .rv`, r);
+        pop(`#${id} .rv .chip`, r + 0.1);
+      });
+
+      card("g-keys", 77.6, 81.6);
+
+      card("g-half", 81.7, 86.4);
+      tl.fromTo("#g-half .big", { scale: 0.5 }, { scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 81.75);
+      pop("#g-half .chip", 84.6);
+
+      card("g-roleplay", 86.6, 95.4);
+      tl.fromTo("#ring", { attr: { "stroke-dashoffset": 0 } }, { attr: { "stroke-dashoffset": 276.46 }, duration: 8.3, ease: "none" }, 86.9);
+      const secs = document.getElementById("secs");
+      const counter = { v: 60 };
+      tl.fromTo(counter, { v: 60 }, { v: 0, duration: 8.3, ease: "none", onUpdate: () => (secs.textContent = Math.ceil(counter.v) + "s") }, 86.9);
+
+      card("g-features", 95.5, 105.0);
+      pop("#g-features .f1", 101.4);
+      pop("#g-features .f2", 102.9);
+      strike("#g-features .f1 .line", 104.2);
+      strike("#g-features .f2 .line", 104.4);
+
+      card("g-best", 105.1, 117.4);
+      tl.set("#g-best .row", { opacity: 0 }, 105.1);
+      rise("#g-best .b1", 112.2);
+      tl.fromTo("#g-best .b1 .ico", { scale: 0.5 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 112.3);
+      rise("#g-best .b2", 115.4);
+
+      card("g-probe", 117.6, 123.8);
+
+      card("g-next", 124.1, 140.5);
+      rise("#g-next .n1", 126.3);
+      rise("#g-next .n2", 130.6);
+      rise("#g-next .n3", 134.8);
+      tl.fromTo("#g-next .n3 .ico", { scale: 0.6 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 134.9);
+
+      card("g-ears", 141.5, 144.7);
+
+      // End card
+      tl.fromTo("#end", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 144.4);
+      tl.fromTo("#end-inner", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 144.45);
+      tl.fromTo("#end .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 144.8);
+
+      // Progress bar across the whole lesson
+      tl.fromTo("#progress-fill", { scaleX: 0 }, { scaleX: 1, duration: DUR, ease: "none" }, 0);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

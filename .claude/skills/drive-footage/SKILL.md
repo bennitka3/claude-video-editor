@@ -20,13 +20,18 @@ ffmpeg (or uses it in a HyperFrames composition via `make-video`), and sends the
 4. **Edit.** Keep the source frame rate and size unless ben says otherwise. Cuts at exact timecodes:
    `-ss`/`-to` after `-i` for frame accuracy. For something to watch on a phone: H.264 + AAC MP4,
    `-crf 18 -pix_fmt yuv420p -movflags +faststart`. For Premiere: match the source codec (ProRes stays ProRes).
-5. **Deliver** to `/mnt/project-files/videos/<short-name>/` and attach it to the reply, saying what was cut and
-   the file size. Results can't go back to Drive from the cloud yet (no Google login there).
+   Write the edit as a script with the output height as a parameter (scale effects and text relative to it),
+   so the preview and the full render are the same cuts, frame for frame.
+5. **Preview first, then deliver.** Run the edit at 480p and send it as a phone page (see **Phone preview page**
+   in `make-video`), saying what was cut. Once ben approves, re-run the same script at full size, copy it to
+   `/mnt/project-files/videos/<short-name>/`, and attach it with the file size. Results can't go back to Drive from the cloud yet (no Google login there).
 6. **Clean up** the downloaded footage when done; raw footage never goes in git.
 
 ## Status
 
 - 2026-10-13: tested end to end with a 31 MB ProRes Proxy clip (download 3.7 s, trim + fades + MP4 export 9 s),
   plus a 1 GB public file for speed. Private links fail cleanly.
+- 2026-10-13: a 15 s hype montage (ffmpeg, synth beat) delivered as a phone page; thread attachments didn't open
+  in ben's mobile app. Preview-first at 480p became the default.
 - Not yet tested: ben's own files over 100 MB (Drive's virus-scan page; `confirm=t` should skip it), and
   delivering results larger than ~1.2 GB in the thread. Large results may need an upload-and-share service instead.

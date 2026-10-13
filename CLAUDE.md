@@ -43,6 +43,24 @@ Deliverable defaults (ben can override):
 | YouTube Shorts / social | 1080×1920 MP4 |
 | Overlay for Premiere (lower third, title, end card) | transparent ProRes 4444 MOV, background unset |
 
+## Cloud environment (decided 2026-10-13)
+
+For now the project uses ben's existing full-access cloud environment, with no video-specific one. HyperFrames
+installs on demand (`make-video` step 1), which costs a minute or so per thread. `setup/cloud-setup.sh` is ready
+for when a dedicated environment is worth it.
+
+**Flag it to ben** (once, in one line) the first time any of these comes up, and suggest creating a separate
+"Video Studio" cloud environment with that script plus the new need:
+
+- A heavy tool every thread would re-download: a speech model for captions or transcription (~0.5 GB),
+  ben's style fonts, LUTs, yt-dlp, Python libraries.
+- An API key for a paid service (voiceover, music, HeyGen). Keep it in the video environment only, never in the
+  repo; on Pro/Max plans it can be a network secret that Claude never sees.
+- A need to pin the HyperFrames version so templates keep rendering the same across a series.
+- Video setup that would slow down or clutter ben's other projects if it lived in the shared environment.
+
+Don't create or change environments yourself; ben does that in Project settings.
+
 ## Footage and Premiere
 
 - Raw footage never goes in git. Work from a folder on ben's computer (device folder tools) or Google Drive.

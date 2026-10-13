@@ -14,7 +14,7 @@ This wraps HyperFrames with ben's styles and delivery rules. HyperFrames' own sk
    `CLAUDE.md`), style. Pick sensible defaults for anything ben left out and say which ones you picked.
 3. **Style.** Copy `styles/<style>/frame.md` (repo root) into the project as `frame.md`. No style named →
    `starter`, and say so.
-4. **Build** in `projects/<short-name>/` (`hyperframes init projects/<short-name> --non-interactive`, or copy a
+4. **Build** in `projects/<short-name>/` (a git-ignored scratch folder) (`hyperframes init projects/<short-name> --non-interactive`, or copy a
    folder from `templates/`). Follow `/hyperframes-core`. Load GSAP from a local `gsap.min.js` if the CDN fails.
 5. **Check.** `npx hyperframes check` must pass. Snapshot each scene's midpoint and look at the frames yourself.
 6. **Preview first (480p).** Render with `--quality draft`, then shrink it:
@@ -26,10 +26,12 @@ This wraps HyperFrames with ben's styles and delivery rules. HyperFrames' own sk
    `--quality delivery` (a Premiere overlay is a transparent ProRes 4444 MOV). Copy it to
    `/mnt/project-files/videos/<short-name>/` and attach it. Over ~15 MB it won't fit on the page; say so and
    link the file (or R2 once it's set up).
-8. **Save.** When ben is happy, commit the project source (renders are git-ignored). Then tell the user what was
-   saved: the folder and files, the branch, and a link to the commit or PR. Other people may use this repo, so
-   nothing gets committed silently, and anything that might be private gets asked about first. If it's worth
-   reusing, offer to copy it into `templates/`.
+8. **Save.** Project files never go in git. Copy the source (HTML, scripts, cut lists, `frame.md`; no snapshots,
+   renders or footage) to `/mnt/project-files/projects/<short-name>/` so later threads can revise it, and update it
+   after every revision. Then tell the user what was saved and where. Other people may use this project, so
+   nothing gets saved silently, and anything that might be private gets asked about first. If it's worth reusing
+   as a starting point, offer to copy it into `templates/` (that one does go in the repo, after ben's OK).
+   To revise an existing video, start by copying its folder from `/mnt/project-files/projects/` into `projects/`.
 
 ## Phone preview page
 
@@ -43,5 +45,6 @@ same page for each new preview so the link stays the same. Example: the dog hype
 
 - 2026-10-13: written from the first test video (skills-repo explainer); steps 4–7 worked in a cloud thread.
 - 2026-10-13: ben asked for a 480p preview before every full-res render, delivered as a phone page.
-- 2026-10-13: ben asked that users are always told which project files get saved to the repo (multiple users).
+- 2026-10-13: ben asked that users are always told which project files get saved (multiple users), and that
+  project files stay out of git; they live in the shared project folder.
 - Not yet tested as a skill from this repo, the transparent MOV export, or footage from ben's computer.

@@ -26,8 +26,10 @@ This wraps HyperFrames with ben's styles and delivery rules. HyperFrames' own sk
    `--quality delivery` (a Premiere overlay is a transparent ProRes 4444 MOV). Copy it to
    `/mnt/project-files/videos/<short-name>/` and attach it. Over ~15 MB it won't fit on the page; say so and
    link the file (or R2 once it's set up).
-8. **Save.** When ben is happy, commit the project source (renders are git-ignored). If it's worth reusing, offer to
-   copy it into `templates/`.
+8. **Save.** When ben is happy, commit the project source (renders are git-ignored). Then tell the user what was
+   saved: the folder and files, the branch, and a link to the commit or PR. Other people may use this repo, so
+   nothing gets committed silently, and anything that might be private gets asked about first. If it's worth
+   reusing, offer to copy it into `templates/`.
 
 ## Phone preview page
 
@@ -41,4 +43,5 @@ same page for each new preview so the link stays the same. Example: the dog hype
 
 - 2026-10-13: written from the first test video (skills-repo explainer); steps 4–7 worked in a cloud thread.
 - 2026-10-13: ben asked for a 480p preview before every full-res render, delivered as a phone page.
+- 2026-10-13: ben asked that users are always told which project files get saved to the repo (multiple users).
 - Not yet tested as a skill from this repo, the transparent MOV export, or footage from ben's computer.

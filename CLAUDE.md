@@ -64,6 +64,7 @@ Don't create or change environments yourself; ben does that in Project settings.
 ## Footage and Premiere
 
 - Raw footage never goes in git. Work from a folder on ben's computer (device folder tools) or Google Drive.
+- From ben's phone (no Mac): he shares a Drive link set to "Anyone with the link"; follow the `drive-footage` skill.
 - HyperFrames can't open Premiere projects. The bridge is exporting overlays as transparent MOVs for ben's
   timeline. A `.prproj` is gzipped XML, so reading markers or cut timings from one is possible but untested.
 

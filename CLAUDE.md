@@ -43,6 +43,13 @@ setup/cloud-setup.sh         # the project cloud environment's setup script
    lists the folder and files saved, plus the branch and a commit or PR link for the repo. Never save something
    without saying so; if a file might be private (client material, people's faces, unreleased work), ask first.
 
+**Where the shared project folder is.** Nothing needs to be mounted or set up. In a Claude Project (the
+claude.ai Projects app), every thread gets the project's shared folder at `/mnt/project-files/` automatically; create
+`projects/` and `videos/` inside it as needed. If `/mnt/project-files/` doesn't exist (a plain Claude Code session,
+not a Project), there is no shared folder: say so once, keep the project files in `projects/<short-name>/` for this
+session only, and offer to save the source files (small text files only, never video) to a `Claude video projects`
+folder in Google Drive if the Drive connector is connected. Never fall back to committing them.
+
 Deliverable defaults (ben can override):
 
 | For | Format |

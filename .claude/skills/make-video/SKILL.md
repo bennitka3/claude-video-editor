@@ -32,6 +32,7 @@ This wraps HyperFrames with ben's styles and delivery rules. HyperFrames' own sk
    nothing gets saved silently, and anything that might be private gets asked about first. If it's worth reusing
    as a starting point, offer to copy it into `templates/` (that one does go in the repo, after ben's OK).
    To revise an existing video, start by copying its folder from `/mnt/project-files/projects/` into `projects/`.
+   No `/mnt/project-files/` (not running in a Claude Project)? See "Where the shared project folder is" in `CLAUDE.md`.
 
 ## Phone preview page
 

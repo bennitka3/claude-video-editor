@@ -83,6 +83,8 @@ Don't create or change environments yourself; ben does that in Project settings.
 - From ben's phone (no Mac): he shares a Drive link set to "Anyone with the link"; follow the `drive-footage` skill.
 - HyperFrames can't open Premiere projects. The bridge is exporting overlays as transparent MOVs for ben's
   timeline. A `.prproj` is gzipped XML, so reading markers or cut timings from one is possible but untested.
+- ben also edits in **FilmCraft** (open-source Premiere clone, ArtCraft suite). Its `.fcproj` projects are JSON and
+  its CLI runs in the cloud, so Claude can read, edit and render them: see the `filmcraft` skill.
 
 ## Styles and skills
 

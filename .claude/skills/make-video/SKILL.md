@@ -7,6 +7,8 @@ description: ben's video workflow in this repo. Use for any request to make, edi
 
 This wraps HyperFrames with ben's styles and delivery rules. HyperFrames' own skills (`/hyperframes`,
 `/hyperframes-core`, `/hyperframes-cli`) say how to build a composition; this skill says what ben wants.
+For a FilmCraft project (`.fcproj`) or FilmCraft shortcuts, use the `filmcraft` skill; the preview and
+save rules below still apply.
 
 1. **Check the tools.** If `hyperframes --version` fails or the `hyperframes` skills aren't listed, run
    `npm install -g hyperframes@latest && hyperframes skills update`.
@@ -49,3 +51,4 @@ same page for each new preview so the link stays the same. Example: the dog hype
 - 2026-10-13: ben asked that users are always told which project files get saved (multiple users), and that
   project files stay out of git; they live in the shared project folder.
 - Not yet tested as a skill from this repo, the transparent MOV export, or footage from ben's computer.
+- 2026-10-25: points FilmCraft projects and shortcuts to the new `filmcraft` skill (ben asked for FilmCraft support).

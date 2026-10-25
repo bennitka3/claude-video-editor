@@ -12,3 +12,4 @@ node_modules/
 # per-video project files live in the shared project folder, not git
 projects/*
 !projects/.gitkeep
+*.fcproj

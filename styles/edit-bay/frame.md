@@ -25,13 +25,13 @@ typography:
   body:     { fontFamily: "Inter", px: 40, weight: 400, color: "paper" }
 
 footage:
-  grade: "slightly darker and warmer than camera, lower saturation, soft vignette (ffmpeg: eq contrast 1.07, brightness -0.045, saturation 0.88; warm colorbalance; vignette PI/4.2)"
+  grade: "a touch darker and warmer than camera, light vignette (ffmpeg: eq contrast 1.03, brightness -0.015, saturation 0.95; colorbalance rs 0.02 bs -0.015 rm 0.01 bm -0.01; vignette PI/6). ben 2026-10-25: the first, heavier grade (contrast 1.07, brightness -0.045, saturation 0.88, vignette PI/4.2) was too intense"
   punch-in: "alternate 1.00× and 1.14× on every cut, anchored left-of-centre on the face, to hide jump cuts"
   audio: "loudness -16 LUFS, 20–30 ms fades at every cut"
 
 components:
   caption:
-    description: "3–4 words at a time, bottom centre 96 px up, one keyword in tally. Pops in 0.12 s, hard cut out."
+    description: "3–4 words at a time, bottom centre 96 px up, one keyword in tally, on a text-sized box (rgba(10,12,20,0.42), 6 px radius) so it reads over a white shirt. Pops in 0.12 s, hard cut out."
   callout:
     description: "Handwritten line (Caveat) beside the head, over the background (right third). Writes on left to
       right in ~0.5 s, tally underline draws under it. Max one on screen; 2–5 s each; 1 per 10–20 s."
@@ -60,7 +60,7 @@ still. No spins, bounces, or whooshes.
 
 - No second accent colour. The keyword, underline and slot outline are all tally.
 - No handwriting over the face, and never more than one callout at a time.
-- No full-width caption bars; text shadow only.
+- No full-width caption bars; only the text-sized box behind each caption.
 - No stock "tech" b-roll (glowing brains, robots). Real screens and real footage from the team only.
 
 ## Inspiration

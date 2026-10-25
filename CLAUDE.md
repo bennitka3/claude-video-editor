@@ -59,23 +59,26 @@ Deliverable defaults (ben can override):
 | YouTube Shorts / social | 1080×1920 MP4 |
 | Overlay for Premiere (lower third, title, end card) | transparent ProRes 4444 MOV, background unset |
 
-## Cloud environment (decided 2026-10-13)
+## Cloud environment (decided 2026-10-13, updated 2026-10-25)
 
-For now the project uses ben's existing full-access cloud environment, with no video-specific one. HyperFrames
-installs on demand (`make-video` step 1), which costs a minute or so per thread. `setup/cloud-setup.sh` is ready
-for when a dedicated environment is worth it.
+Video threads have so far run in ben's shared "Code Cloud 1" environment, which also holds the Cast project's
+production keys. A "Video Editor" cloud environment exists (created 2026-10-13); the 2026-10-25 system review
+proposes making it the no-secrets environment for video, research and skills, with `setup/cloud-setup.sh` plus
+`pip install yt-dlp faster-whisper` as its setup script (item in `bennitka3/claude-skills` `system/BACKLOG.md`).
+Until ben switches, HyperFrames installs on demand (`make-video` step 1), about a minute per thread.
 
-**Flag it to ben** (once, in one line) the first time any of these comes up, and suggest creating a separate
-"Video Studio" cloud environment with that script plus the new need:
+Watching or transcribing a video someone links (reels, YouTube, a direct .mp4) is already covered by the
+`social-intake` and `watch-video` skills in `bennitka3/claude-skills-testing`; attach that repo rather than
+rebuilding it here.
 
-- A heavy tool every thread would re-download: a speech model for captions or transcription (~0.5 GB),
-  ben's style fonts, LUTs, yt-dlp, Python libraries.
+**Flag it to ben** (once, in one line) the first time any of these comes up, and add it to that backlog item:
+
+- A heavy tool every thread would re-download: ben's style fonts, LUTs, a bigger speech model, Python libraries.
 - An API key for a paid service (voiceover, music, HeyGen). Keep it in the video environment only, never in the
   repo; on Pro/Max plans it can be a network secret that Claude never sees.
 - A need to pin the HyperFrames version so templates keep rendering the same across a series.
-- Video setup that would slow down or clutter ben's other projects if it lived in the shared environment.
 
-Don't create or change environments yourself; ben does that in Project settings.
+Don't create or change environments yourself; ben does that in settings.
 
 ## Footage and Premiere
 

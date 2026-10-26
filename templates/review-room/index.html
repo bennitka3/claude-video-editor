@@ -1,0 +1,207 @@
+<title>{{TITLE}} · Review</title>
+<!-- Review room template (make-video skill). Fill the {{...}} placeholders, publish with the video as a supporting file
+     and capabilities {db:{}, user:{scopes:["profile"]}}. Notes live in the db collection "notes":
+     {cut, t (seconds), text, author, status "open"|"done", reply?, createdAt}. -->
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;600;700&display=swap">
+<style>
+/* Layout: a review monitor. Player + marker strip on top, timecoded notes underneath (side by side on wide screens). Single dark look: the edit-bay night blue. */
+:root{
+  --night:#15192A; --panel:#1C2135; --line:#2C3350; --paper:#F4EFE6; --muted:#A3A9BD; --tally:#F2A93B; --done:#7FC8A0;
+  --hand:"Caveat",cursive; --body:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+body{background:var(--night);color:var(--paper);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:20px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+h1{margin:0;font-family:var(--hand);font-size:44px;line-height:1;font-weight:700}
+.meta{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--tally)}
+.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.monitor{display:grid;gap:10px;min-width:0}
+video{width:100%;aspect-ratio:16/9;background:#000;display:block;border-radius:6px;max-width:100%}
+.strip{position:relative;height:30px;background:var(--panel);border:1px solid var(--line);border-radius:4px;cursor:pointer}
+.strip .ph{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--paper);pointer-events:none}
+.strip .mk{position:absolute;top:5px;width:10px;height:18px;margin-left:-5px;background:var(--tally);border:0;border-radius:2px;cursor:pointer;padding:0}
+.strip .mk.done{background:var(--done)}
+.strip .mk:focus-visible{outline:2px solid var(--paper);outline-offset:2px}
+.tc-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.compose{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px;display:grid;gap:10px}
+.compose label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.compose .stamp{color:var(--tally);font-size:15px;letter-spacing:0;font-variant-numeric:tabular-nums}
+textarea{width:100%;box-sizing:border-box;min-height:74px;resize:vertical;background:var(--night);color:var(--paper);border:1px solid var(--line);border-radius:4px;padding:10px;font:inherit}
+textarea:focus-visible,button:focus-visible{outline:2px solid var(--tally);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button.act{font:600 14px var(--body);background:var(--tally);color:#1A1200;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}
+button.ghost{font:500 13px var(--body);background:transparent;color:var(--paper);border:1px solid var(--line);border-radius:4px;padding:7px 12px;cursor:pointer}
+button:disabled{opacity:.5;cursor:default}
+.hint{font-size:13px;color:var(--muted)}
+.notes{display:grid;gap:10px;min-width:0}
+.notes h2{margin:0;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.list{display:grid;gap:8px}
+.note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tally);border-radius:4px;padding:10px 12px;display:grid;gap:6px}
+.note.done{border-left-color:var(--done);opacity:.75}
+.note .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.note .tc{font-family:var(--mono);font-size:14px;color:var(--tally);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-variant-numeric:tabular-nums}
+.note.done .tc{color:var(--done)}
+.note .who{font-size:12px;color:var(--muted)}
+.note .txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.note .reply{font-size:13.5px;color:var(--paper);background:rgba(244,239,230,.06);border-radius:4px;padding:6px 9px}
+.note .reply b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--done);margin-right:6px}
+.note .tools{display:flex;gap:8px}
+.note .tools button{font:500 12px var(--body);background:none;border:0;color:var(--muted);cursor:pointer;padding:0;text-decoration:underline}
+.older summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 0}
+.older .list{margin-top:8px}
+.note .cutname{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.empty{border:1px dashed var(--line);border-radius:6px;padding:16px;color:var(--muted)}
+.status{font-size:13px;color:var(--muted)}
+.status.err{color:#F28B6B}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>{{TITLE}}</h1>
+    <span class="meta" id="cutlabel">{{LABEL}}</span>
+  </header>
+
+  <div class="grid">
+    <section class="monitor" aria-label="Player">
+      <video id="vid" src="{{VIDEO}}" controls playsinline preload="metadata"></video>
+      <div class="strip" id="strip" role="slider" aria-label="Notes timeline" tabindex="0" aria-valuemin="0" aria-valuenow="0"><div class="ph" id="ph"></div></div>
+      <div class="tc-row"><span id="cur">00:00.0</span><span id="dur">--:--</span></div>
+
+      <form class="compose" id="compose">
+        <label for="noteText">Note at <span class="stamp" id="stamp">00:00.0</span>
+          <button type="button" class="ghost" id="restamp">Use current time</button></label>
+        <textarea id="noteText" placeholder="What should change here? (Pauses the video while you type.)"></textarea>
+        <div class="row">
+          <button class="act" id="save" type="submit">Add note</button>
+          <span class="hint">Ctrl/⌘ + Enter adds it. Claude reads these notes with their timecodes.</span>
+        </div>
+        <div class="status" id="status" role="status"></div>
+      </form>
+    </section>
+
+    <section class="notes" aria-label="Notes">
+      <h2 id="count">Notes</h2>
+      <div class="list" id="list"><div class="empty">Loading notes…</div></div>
+      <details class="older" id="olderBox" hidden><summary id="olderSum">Notes on earlier cuts</summary><div class="list" id="older"></div></details>
+    </section>
+  </div>
+</div>
+
+<script>
+const CUT = "{{CUT}}";
+const vid = document.getElementById("vid"), strip = document.getElementById("strip"), ph = document.getElementById("ph");
+const list = document.getElementById("list"), statusEl = document.getElementById("status"), countEl = document.getElementById("count");
+const text = document.getElementById("noteText"), stampEl = document.getElementById("stamp");
+let stamp = 0, notes = [], older = [], db = null, user = null, myId = null, names = {};
+
+const fmt = s => { s = Math.max(0, s || 0); const m = Math.floor(s / 60); return String(m).padStart(2, "0") + ":" + (s - m * 60).toFixed(1).padStart(4, "0"); };
+const setStamp = t => { stamp = Math.round(t * 10) / 10; stampEl.textContent = fmt(stamp); };
+const say = (msg, err) => { statusEl.textContent = msg; statusEl.className = "status" + (err ? " err" : ""); };
+
+vid.addEventListener("timeupdate", () => {
+  document.getElementById("cur").textContent = fmt(vid.currentTime);
+  if (vid.duration) { ph.style.left = (vid.currentTime / vid.duration * 100) + "%"; strip.setAttribute("aria-valuenow", vid.currentTime.toFixed(1)); }
+});
+vid.addEventListener("loadedmetadata", () => { document.getElementById("dur").textContent = fmt(vid.duration); strip.setAttribute("aria-valuemax", vid.duration.toFixed(1)); renderMarkers(); });
+strip.addEventListener("click", e => {
+  if (e.target.classList.contains("mk") || !vid.duration) return;
+  const r = strip.getBoundingClientRect(); vid.currentTime = (e.clientX - r.left) / r.width * vid.duration;
+});
+strip.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") { vid.currentTime += 1; e.preventDefault(); }
+  if (e.key === "ArrowLeft") { vid.currentTime -= 1; e.preventDefault(); }
+});
+text.addEventListener("focus", () => { if (!text.value) setStamp(vid.currentTime); vid.pause(); });
+document.getElementById("restamp").addEventListener("click", () => setStamp(vid.currentTime));
+text.addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); document.getElementById("compose").requestSubmit(); } });
+
+function seek(t) { vid.currentTime = t; vid.play().catch(() => {}); }
+
+function renderMarkers() {
+  strip.querySelectorAll(".mk").forEach(n => n.remove());
+  if (!vid.duration) return;
+  for (const n of notes) {
+    const b = document.createElement("button");
+    b.className = "mk" + (n.status === "done" ? " done" : "");
+    b.style.left = Math.min(100, n.t / vid.duration * 100) + "%";
+    b.title = fmt(n.t) + " · " + n.text;
+    b.setAttribute("aria-label", "Note at " + fmt(n.t));
+    b.addEventListener("click", ev => { ev.stopPropagation(); seek(n.t); });
+    strip.appendChild(b);
+  }
+}
+
+async function render() {
+  countEl.textContent = notes.length ? `Notes (${notes.length})` : "Notes";
+  renderMarkers();
+  const ids = [...new Set([...notes, ...older].map(n => n.author).filter(Boolean))];
+  if (user && ids.length) { try { names = await user.profiles(ids); } catch {} }
+  if (!notes.length) {
+    list.innerHTML = "";
+    const d = document.createElement("div"); d.className = "empty";
+    d.textContent = db ? "No notes yet. Pause anywhere, type what should change, and press Add note." : "Notes need you to be signed in to claude.ai. You can still watch the cut.";
+    list.appendChild(d); return;
+  }
+  list.innerHTML = "";
+  for (const n of notes) list.appendChild(card(n, true));
+}
+
+function renderOlder() {
+  const box = document.getElementById("olderBox"), wrap = document.getElementById("older");
+  box.hidden = !older.length;
+  document.getElementById("olderSum").textContent = `Notes on earlier cuts (${older.length})`;
+  wrap.innerHTML = "";
+  for (const n of older) wrap.appendChild(card(n, false));
+}
+
+function card(n, current) {
+  const el = document.createElement("article"); el.className = "note" + (n.status === "done" ? " done" : "");
+  const top = document.createElement("div"); top.className = "top";
+  if (current) { const tc = document.createElement("button"); tc.className = "tc"; tc.textContent = fmt(n.t); tc.addEventListener("click", () => seek(n.t)); top.append(tc); }
+  else { const c = document.createElement("span"); c.className = "cutname"; c.textContent = (n.cut || "?") + " @ " + fmt(n.t); top.append(c); }
+  const who = document.createElement("span"); who.className = "who";
+  who.textContent = (n.author && n.author === myId ? "You" : (names[n.author]?.name || "Someone")) + (n.status === "done" ? " · done" : "");
+  top.append(who);
+  const tx = document.createElement("div"); tx.className = "txt"; tx.textContent = n.text;
+  el.append(top, tx);
+  if (n.reply) { const r = document.createElement("div"); r.className = "reply"; const b = document.createElement("b"); b.textContent = "Claude"; r.append(b, document.createTextNode(n.reply)); el.append(r); }
+  if (current && db && n.author === myId) {
+    const tools = document.createElement("div"); tools.className = "tools";
+    const del = document.createElement("button"); del.textContent = "Delete";
+    del.addEventListener("click", async () => { try { await db.doc("notes/" + n.id).delete(); } catch (e) { say("Couldn't delete that note: " + (e.message || e.code), true); } });
+    tools.append(del); el.append(tools);
+  }
+  return el;
+}
+
+document.getElementById("compose").addEventListener("submit", async e => {
+  e.preventDefault();
+  const body = text.value.trim();
+  if (!body) { say("Type a note first.", true); return; }
+  if (!db) { say("Sign in to claude.ai to leave notes.", true); return; }
+  const btn = document.getElementById("save"); btn.disabled = true;
+  try {
+    await db.collection("notes").add({ cut: CUT, t: stamp, text: body, author: myId || "", status: "open", createdAt: new Date().toISOString() });
+    text.value = ""; say("Added at " + fmt(stamp) + ".");
+  } catch (err) { say("Couldn't save the note: " + (err.message || err.code) + ". Your text is still in the box.", true); }
+  btn.disabled = false;
+});
+
+(async () => {
+  render();
+  if (!window.claude?.use) { render(); return; }
+  [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+  if (user) { try { myId = await user.id(); } catch {} }
+  if (!db) { render(); return; }
+  db.collection("notes").onSnapshot(snap => {
+    const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    notes = all.filter(n => n.cut === CUT).sort((a, b) => a.t - b.t);
+    older = all.filter(n => n.cut !== CUT).sort((a, b) => (b.cut || "").localeCompare(a.cut || "") || a.t - b.t);
+    render().then(renderOlder);
+  }, err => { say("Notes are unavailable right now (" + err.code + ").", true); });
+})();
+</script>

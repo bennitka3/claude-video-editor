@@ -19,11 +19,12 @@ save rules below still apply.
 4. **Build** in `projects/<short-name>/` (a git-ignored scratch folder) (`hyperframes init projects/<short-name> --non-interactive`, or copy a
    folder from `templates/`). Follow `/hyperframes-core`. Load GSAP from a local `gsap.min.js` if the CDN fails.
 5. **Check.** `npx hyperframes check` must pass. Snapshot each scene's midpoint and look at the frames yourself.
-6. **Preview first (480p).** Render with `--quality draft`, then shrink it:
-   `ffmpeg -i draft.mp4 -vf scale=-2:480 -c:v libx264 -crf 23 -pix_fmt yuv420p -c:a aac -movflags +faststart preview-480p.mp4`.
-   HyperFrames has no resolution flag, so this saves file size, not render time. Deliver it as a phone page
-   (see **Phone preview page** below) with one short paragraph: what's in it, what defaults you picked, and what
-   ben might want to change. Iterate on notes at 480p.
+6. **Preview first, in the review room.** Render with `--quality draft`, then shrink it to a small review copy
+   (240p unless ben asks otherwise; it keeps every cut under the 15 MB page limit):
+   `ffmpeg -i draft.mp4 -vf scale=-2:240 -c:v libx264 -crf 26 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart <cut>-240p.mp4`.
+   HyperFrames has no resolution flag, so this saves file size, not render time. Post it in the video's
+   **review room** (below) with one short paragraph: what's in it, what defaults you picked, and what ben might
+   want to change. Iterate on notes there.
 7. **Full render, only after ben approves the preview.** Same composition, nothing else changed, with
    `--quality delivery` (a Premiere overlay is a transparent ProRes 4444 MOV). Copy it to
    `/mnt/project-files/videos/<short-name>/` and attach it. Over ~15 MB it won't fit on the page; say so and
@@ -36,13 +37,26 @@ save rules below still apply.
    To revise an existing video, start by copying its folder from `/mnt/project-files/projects/` into `projects/`.
    No `/mnt/project-files/` (not running in a Claude Project)? See "Where the shared project folder is" in `CLAUDE.md`.
 
-## Phone preview page
+## Review room
 
-ben can't open MP4s attached in a thread from the mobile app. Publish an Artifact page instead: the MP4 as a
-supporting file (`files`, 15 MB max per file), a `<video controls playsinline>` player, and a "Save video to
-phone" button through the `downloads` capability (`capabilities: {downloads: true}`; fetch the MP4 as a blob,
-then `downloads.save`). In the iPhone app that opens the share sheet, where Save Video puts it in Photos. Update the
-same page for each new preview so the link stays the same. Example: the dog hype montage page from 2026-10-13.
+One Artifact page per video where ben watches each cut and leaves notes pinned to timecodes, so he never types
+timecodes in chat. Template: `templates/review-room/index.html` (repo root). Same page, same link, for every cut
+of that video.
+
+- **First cut.** Copy the template to the scratchpad, fill `{{TITLE}}` (the video's title), `{{CUT}}` (a short id,
+  e.g. `v1`, `60s-v1`), `{{LABEL}}` (e.g. `60 s cut · v1 · 240p review copy`) and `{{VIDEO}}` (the mp4's file name).
+  Publish it with the mp4 in `files` and `capabilities: {db: {}, user: {scopes: ["profile"]}}` (load the
+  `artifact-capabilities` skill first). Put the link in the reply and in project memory.
+- **Reading notes.** When ben says his notes are in, read them with `ArtifactData` `list` on collection `notes`
+  (fields: `cut`, `t` in seconds on that cut's timeline, `text`, `status` `open`/`done`, `reply`). Work only on
+  notes for the current `cut`. `t` is on the old cut's timeline, so map it back to source time through the EDL.
+- **Answering notes.** After each change, write back to the note (`update` with `if_version`): `reply` says in one
+  line what changed, or why not, and `status: "done"`. ben sees the reply under his note. Questions go in `reply`
+  too, with `status` left `open`.
+- **Next cut.** New `{{CUT}}` id, new mp4, republish the same file path so the link stays the same. Notes on
+  earlier cuts stay visible (collapsed) with your replies.
+- **Phone.** The page plays on the iPhone app. If ben wants the file on his phone, add a "Save video" button
+  through the `downloads` capability (fetch the mp4 as a blob, then `downloads.save`; opens the share sheet).
 
 ## Status
 
@@ -52,3 +66,6 @@ same page for each new preview so the link stays the same. Example: the dog hype
   project files stay out of git; they live in the shared project folder.
 - Not yet tested as a skill from this repo, the transparent MOV export, or footage from ben's computer.
 - 2026-10-25: points FilmCraft projects and shortcuts to the new `filmcraft` skill (ben asked for FilmCraft support).
+- 2026-10-26: the review room replaces the phone preview page (ben asked for it on every edit). Tested on the
+  "AI won't make your videos better" 60 s cut: ben left 7 notes, Claude read them, replied on each and posted
+  v2 to the same page. Untested: more than one reviewer, the save-to-phone button inside the review room.

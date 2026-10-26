@@ -37,6 +37,15 @@ save rules below still apply.
    To revise an existing video, start by copying its folder from `/mnt/project-files/projects/` into `projects/`.
    No `/mnt/project-files/` (not running in a Claude Project)? See "Where the shared project folder is" in `CLAUDE.md`.
 
+## Edit rules
+
+- **Every zoom has a focal point** (ben, 2026-10-26). A punch-in, push-in or crop-in scales around a point you pick,
+  usually the eyes, and that point stays at the same spot on screen for the whole zoom. Never zoom around the frame
+  centre or a fixed crop edge. With ffmpeg, for a focal point (fx, fy) in output pixels:
+  `scale=W*z:H*z,crop=W:H:fx*(z-1):fy*(z-1)` for a static zoom, and for a push-in
+  `scale=w='2*trunc(W/2*(1+p*t/d))':h='2*trunc(H/2*(1+p*t/d))':eval=frame,crop=W:H:'fx*(iw/W-1)':'fy*(ih/H-1)'`.
+  Find the eyes on a still with a grid (`drawgrid`) before cutting.
+
 ## Review room
 
 One Artifact page per video where ben watches each cut and leaves notes pinned to timecodes, so he never types
@@ -80,3 +89,4 @@ Reusable pieces ben has signed off on, kept in `effects/` next to this file (fin
   "AI won't make your videos better" 60 s cut: ben left 7 notes, Claude read them, replied on each and posted
   v2 to the same page. Untested: more than one reviewer, the save-to-phone button inside the review room.
 - 2026-10-26: added the boil bubble effect (ben asked to keep it for later use).
+- 2026-10-26: added "Every zoom has a focal point" (ben's note on the vertical v4 edit, where a push-in drifted off his eyes). Tested in that edit's round 3.

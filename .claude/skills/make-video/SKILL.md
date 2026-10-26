@@ -59,6 +59,15 @@ of that video.
 - **Phone.** The page plays on the iPhone app. If ben wants the file on his phone, add a "Save video" button
   through the `downloads` capability (fetch the mp4 as a blob, then `downloads.save`; opens the share sheet).
 
+## Effects
+
+Reusable pieces ben has signed off on, kept in `effects/` next to this file (find them relative to this skill's folder).
+
+- **Boil bubble** (`effects/boil_bubble.py`, ben 2026-10-26): a clip (usually the face) inside a round, hand-drawn
+  bubble. Two pencil lines in the accent colour wobble independently like stop motion around the same near-circle, and
+  the clip is masked to the innermost line on every frame. Used as the corner face while a graphic covers the screen.
+  It writes mask and outline PNG sequences; the docstring has the ffmpeg overlay recipe.
+
 ## Status
 
 - 2026-10-13: written from the first test video (skills-repo explainer); steps 4–7 worked in a cloud thread.
@@ -70,3 +79,4 @@ of that video.
 - 2026-10-26: the review room replaces the phone preview page (ben asked for it on every edit). Tested on the
   "AI won't make your videos better" 60 s cut: ben left 7 notes, Claude read them, replied on each and posted
   v2 to the same page. Untested: more than one reviewer, the save-to-phone button inside the review room.
+- 2026-10-26: added the boil bubble effect (ben asked to keep it for later use).

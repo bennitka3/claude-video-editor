@@ -10,19 +10,34 @@ become a real style in `styles/<name>/frame.md` (and maybe a template), and the 
    when Instagram blocks). If it won't download, ask ben to upload or screen-record it.
 2. Watch it properly: 6 fps contact sheets, ffmpeg scene detection for cut times, whisper word timings for any
    voiceover, a loudness pass and a spectrogram for the sound.
-3. Copy `_template.md` to `references/<slug>.md`. The slug names the look, not the creator (`paper-pixel-poem`).
+3. Ask ben (or note when he says) what he likes about it; measure that part with data, and add it to
+   "What ben keeps across references" below.
+4. Copy `_template.md` to `references/<slug>.md`. The slug names the look, not the creator (`paper-pixel-poem`).
    Fill every section in editor language (shots, holds, frames at 24/30 fps), with exact times and sampled colours.
-4. Save the downloaded clip and a contact sheet to `/mnt/project-files/references/<slug>/` (never in git; it's
+5. Save the downloaded clip and a contact sheet to `/mnt/project-files/references/<slug>/` (never in git; it's
    someone else's video).
-5. Add a row to the table below, and file the breakdown as a source in the research knowledge base
+6. Add a row to the table below, and file the breakdown as a source in the research knowledge base
    (`bennitka3/research-testing`, `sources/style-ref-<slug>.md`) per the `ben-os` filing map.
-6. Offer ben one opinionated idea for his version. Don't build it until he asks.
+7. Offer ben one opinionated idea for his version. Don't build it until he asks.
 
 ## Library
 
 | Reference | Look in one line | Best for | ben's take | Became |
 |---|---|---|---|---|
-| [paper-pixel-poem](paper-pixel-poem.md) | Spoken one-line poem: lowercase type-on, pixel-art icons and gradient-mapped silhouettes, cutting between paper white, black and red | Short manifesto / channel opener, 15–25 s | Likes it (2026-10-26) | Not yet |
+| [paper-pixel-poem](paper-pixel-poem.md) | Spoken one-line poem: lowercase type-on, pixel-art icons and gradient-mapped silhouettes, cutting between paper white, black and red | Short manifesto / channel opener, 15–25 s | Keeps the pacing, beat cuts, SFX and speed-ramp motion; composition exchangeable | Not yet |
+
+## What ben keeps across references
+
+His taste, collected from every entry. When ben asks for his own style, it starts from this list.
+
+- **Speed-ramp motion** (2026-10-26, paper-pixel-poem): every move enters fast, slows for the middle of the segment
+  and speeds into the cut, so cuts hide inside the motion.
+- **Cuts on the music grid** (2026-10-26, paper-pixel-poem): phrases follow the VO, cut frames snap to beats or
+  eighth notes.
+- **An SFX on every cut** (2026-10-26, paper-pixel-poem): whoosh into the cut, hit or tail just after.
+- **Pacing** (2026-10-26, paper-pixel-poem): holds while a line is spoken, bursts of very short cuts on the climax,
+  longest hold at the end.
+- **Composition is exchangeable** (2026-10-26): the look (icons, palette, type) matters less than the timing above.
 
 ## Status
 

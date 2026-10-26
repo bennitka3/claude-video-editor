@@ -30,6 +30,10 @@ One paragraph: what it is and why it works.
 - **Colour:** sampled hex values, grade, texture (grain, vignette).
 - **Sound:** VO, music, SFX, silences, with times.
 
+## What ben takes from it
+
+The parts ben said he likes, measured (cut-to-beat offsets, SFX timing, motion curves), and the recipe for them.
+
 ## How we'd build it
 
 Which parts HyperFrames does well, which are footage work in Premiere or FilmCraft, and what we'd need (fonts,

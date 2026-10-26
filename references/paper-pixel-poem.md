@@ -8,6 +8,7 @@ length: "20.4 s"
 format: "1440×1080 (4:3), 24 fps"
 look: "Spoken one-line poem: lowercase type-on, pixel-art icons and gradient-mapped silhouettes, cutting between paper white, black and red."
 best_for: "Short manifesto, channel opener or brand sting, 15–25 s, one sentence of VO."
+ben_keeps: "Pacing, cuts on music beats, an SFX on every cut, speed-ramp motion (fast in, slow middle, fast out)."
 clip: /mnt/project-files/references/paper-pixel-poem/
 research_source: sources/style-ref-paper-pixel-poem.md (bennitka3/research-testing)
 became: ""
@@ -20,7 +21,8 @@ typed on screen as it's said, and each keyword gets its own object and its own h
 Change (No AI used)"; the creator sells editing tools and a plugin from their bio. 488,590 likes when captured.
 
 Why it works: the edit has one idea per beat and the picture changes exactly when a new idea arrives. It holds while a
-line is spoken and cuts hard on the keywords, so the rhythm comes from the voiceover, not a music grid. The look
+line is spoken and cuts hard on the keywords; the phrases come from the voiceover, but the cuts themselves snap to the
+music's eighth-note grid (measured below). The look
 mixes three textures (paper, pixel art, glowing silhouette) but only one palette.
 
 ## Beat map
@@ -64,6 +66,41 @@ Cut times from ffmpeg scene detection, words from whisper word timings. 24 fps, 
   transients on the cuts. The key move is the **silence after the question** (2.4–3.3 s, around −35 to −40 dB) before
   "you don't." The end is music only at about −30 dB for 3 s. Overall about −17 dB average, peaks −1.4 dB.
 
+## What ben takes from it (measured 2026-10-26)
+
+ben: "what I really like about this is the pacing, the cut to music beats, and the sound effects. I also like the
+smoothness of each animation feeling like a speed ramp that transitions quickly and smoothly slows for the middle of
+a segment. actual composition is exchangeable." So these four are the recipe; the pixel icons, paper and type are not.
+
+- **Cuts on the music.** The bed is about 108 BPM (one beat ≈ 0.55 s, 13 frames at 24 fps). 16 of 22 cuts land within
+  60 ms (about 1.5 frames) of an eighth note, on the beat or on the "and". Cuts placed at random would hit that only
+  44% of the time, so it's deliberate, if not frame-perfect (librosa beat tracking; the tempo estimate could be off by
+  a factor of two). Phrase lengths follow the VO; the exact cut frame snaps to the grid.
+- **An SFX on every cut.** High-frequency energy (above 4 kHz) jumps 15–33 dB above the track's median at 13 of 15
+  cuts checked, mostly within ±75 ms of the cut. Several peak 110–155 ms *after* the cut, which reads as a whoosh
+  into the cut with its impact or tail just after. The biggest (+33 dB) is the gradient wipe at 6.3 s. Whispers in
+  the VO also carry high frequencies, so treat these numbers as approximate.
+- **Speed ramp inside every moving segment.** Measured as how much the picture changes per frame. Each moving
+  segment is fast in the first third, slow in the middle, and speeds up again into the cut:
+
+  | Segment | First third | Middle | Last third |
+  |---|---|---|---|
+  | Paper type-on (0.1–2.1 s) | 14.4 | 3.8 | 10.3 |
+  | Icon ring (6.6–8.3 s) | 24.4 | 10.0 | 17.5 |
+  | White slide 1 (9.2–9.9 s) | 15.9 | 8.0 | 13.9 |
+  | White slide 2 (10.5–11.0 s) | 22.1 | 10.3 | 23.6 |
+  | Ring scatter (12.0–13.8 s) | 20.2 | 7.6 | 10.0 |
+
+  The shape: a hard ease-out of about 0.3–0.5 s into the shot (the icon ring drops from 35 to 7 over ~1 s), a slow
+  drift through the middle, then an ease-in of about 0.3–0.5 s so the move is at full speed when it cuts. The next
+  shot starts at that same speed, so the cut is hidden inside the motion (plus blur and the whoosh). The
+  keyword holds ("action.", "intention.", "curiosity.", the hand) barely move (1–4) but still get a small kick in and
+  out.
+- **Recipe for our own builds:** in HyperFrames/GSAP, enter with `expo.out` (0.35–0.5 s), drift with a slow linear
+  move, exit with `expo.in` (0.3–0.4 s) ending on the cut frame, and start the next shot moving at that same speed.
+  Put cuts on the music's eighth notes and lay a whoosh ending on, or a hit starting at, each cut. In Premiere, this
+  is Time Remapping speed ramps or Bezier keyframes on position/scale with steep handles, cut at peak speed.
+
 ## How we'd build it
 
 - **HyperFrames can do most of it:** the paper/black/red frames, type-on synced to VO word timings (whisper gives
@@ -84,3 +121,5 @@ gradient-mapped in a single brand colour. The pixel icons are this creator's sig
 ## ben's notes
 
 - 2026-10-26: shared as the first style he "really likes" to build his editing styles from.
+- 2026-10-26: likes the pacing, cuts on music beats, the sound effects and the speed-ramp feel of every move;
+  the composition (icons, paper, type) is exchangeable. Measured in "What ben takes from it" above.

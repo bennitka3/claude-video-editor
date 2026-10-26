@@ -43,8 +43,9 @@ One Artifact page per video where ben watches each cut and leaves notes pinned t
 timecodes in chat. Template: `templates/review-room/index.html` (repo root). Same page, same link, for every cut
 of that video.
 
-- **First cut.** Copy the template to the scratchpad, fill `{{TITLE}}` (the video's title), `{{CUT}}` (a short id,
-  e.g. `v1`, `60s-v1`), `{{LABEL}}` (e.g. `60 s cut · v1 · 240p review copy`) and `{{VIDEO}}` (the mp4's file name).
+- **First cut.** Copy the template to the scratchpad and fill `{{TITLE}}` (the video's title) and `{{CUTS}}`, a JSON
+  list of `{id, video, label, tab?}`: `id` a short cut id (`v1`, `60s-v1`), `video` the mp4's file name, `label` e.g.
+  `60 s cut · v1 · 240p review copy`. Two or more entries show tabs, for A/B versions of the same cut.
   Publish it with the mp4 in `files` and `capabilities: {db: {}, user: {scopes: ["profile"]}}` (load the
   `artifact-capabilities` skill first). Put the link in the reply and in project memory.
 - **Reading notes.** When ben says his notes are in, read them with `ArtifactData` `list` on collection `notes`
@@ -53,7 +54,7 @@ of that video.
 - **Answering notes.** After each change, write back to the note (`update` with `if_version`): `reply` says in one
   line what changed, or why not, and `status: "done"`. ben sees the reply under his note. Questions go in `reply`
   too, with `status` left `open`.
-- **Next cut.** New `{{CUT}}` id, new mp4, republish the same file path so the link stays the same. Notes on
+- **Next cut.** New cut id(s) in `{{CUTS}}`, new mp4(s), republish the same file path so the link stays the same. Notes on
   earlier cuts stay visible (collapsed) with your replies.
 - **Phone.** The page plays on the iPhone app. If ben wants the file on his phone, add a "Save video" button
   through the `downloads` capability (fetch the mp4 as a blob, then `downloads.save`; opens the share sheet).

@@ -20,6 +20,7 @@ editor: precise timing, pacing and style feedback. Keep explanations plain; ben 
 
 ```
 styles/<style>/frame.md      # one visual style per folder; HyperFrames reads frame.md as the brand spec
+references/<slug>.md         # breakdowns of editing styles ben likes (other people's videos); see references/README.md
 .claude/skills/<name>/       # ben's own video skills, built on top of HyperFrames
 templates/<name>/            # finished compositions worth reusing as a starting point
 projects/<name>/             # scratch build folder, git-ignored; project files are kept in the shared project folder
@@ -91,6 +92,9 @@ Don't create or change environments yourself; ben does that in settings.
 
 ## Styles and skills
 
+- When ben shares a video whose editing style he likes, add it to `references/` (steps in `references/README.md`).
+  When he asks for a video "like" one of them, read that reference first. A reference becomes a style only when
+  ben asks for his version.
 - A new style starts as `styles/<name>/frame.md` (YAML frontmatter tokens + prose rules; see HyperFrames'
   `hyperframes-creative/references/design-spec.md`). Quote its colors and fonts exactly.
 - ben's own skills live in `.claude/skills/`. Each keeps a `## Status` note at the end. A skill only moves to the

@@ -20,7 +20,7 @@ h1{margin:0;font-family:var(--hand);font-size:44px;line-height:1;font-weight:700
 .grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
 @media (max-width:860px){.grid{grid-template-columns:1fr}}
 .monitor{display:grid;gap:10px;min-width:0}
-video{width:100%;aspect-ratio:16/9;background:#000;display:block;border-radius:6px;max-width:100%}
+video{width:100%;max-height:78vh;background:#000;display:block;border-radius:6px;object-fit:contain}
 .strip{position:relative;height:30px;background:var(--panel);border:1px solid var(--line);border-radius:4px;cursor:pointer}
 .strip .ph{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--paper);pointer-events:none}
 .strip .mk{position:absolute;top:5px;width:10px;height:18px;margin-left:-5px;background:var(--tally);border:0;border-radius:2px;cursor:pointer;padding:0}

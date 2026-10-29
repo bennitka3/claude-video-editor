@@ -94,7 +94,7 @@ Don't create or change environments yourself; ben does that in settings.
 - Styles, kit parts and style references now live in the account-wide `video-styles` skill (`bennitka3/claude-skills`):
   when ben shares a video whose editing style he likes, add it to that skill's `references/` (steps in its README),
   and pick styles and parts by its keywords when he names none. `styles/` here holds only the older HyperFrames
-  styles `starter` and `edit-bay` until they move there.
+  style `starter` until it moves there.
 - A new style starts as `styles/<name>/frame.md` (YAML frontmatter tokens + prose rules; see HyperFrames'
   `hyperframes-creative/references/design-spec.md`). Quote its colors and fonts exactly.
 - ben's own skills live in `.claude/skills/`. Each keeps a `## Status` note at the end. A skill only moves to the

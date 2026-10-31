@@ -11,7 +11,7 @@ For a FilmCraft project (`.fcproj`) or FilmCraft shortcuts, use the `filmcraft` 
 save rules below still apply.
 
 1. **Check the tools.** If `hyperframes --version` fails or the `hyperframes` skills aren't listed, run
-   `npm install -g hyperframes@latest && hyperframes skills update`.
+   `bash setup/install-hyperframes.sh` from the claude-video-editor repo (pinned, security-scanned version; never `@latest`).
 2. **Pin down the brief in one line:** audience (team or YouTube), length, format (see the table in the repo's
    `CLAUDE.md`), style. Pick sensible defaults for anything ben left out and say which ones you picked.
 3. **Style.** Copy `styles/<style>/frame.md` (repo root) into the project as `frame.md`. No style named →

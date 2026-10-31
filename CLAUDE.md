@@ -9,7 +9,7 @@ editor: precise timing, pacing and style feedback. Keep explanations plain; ben 
 - **HyperFrames, open source** (github.com/heygen-com/hyperframes). Claude writes each video as HTML and renders it
   locally with `npx hyperframes`: no account, no watermark. The `hyperframes*` skills are the reference; read
   `/hyperframes` first for any video request.
-- If the skills or CLI are missing (no setup script ran), run `npm install -g hyperframes@latest && hyperframes skills update`.
+- If the skills or CLI are missing (no setup script ran), run `bash setup/install-hyperframes.sh` (pinned to the security-scanned version in `setup/hyperframes-version`; never `@latest`).
 - **Do not use the HeyGen HyperFrames connector** unless ben asks for a HeyGen-hosted project. It needs a HeyGen
   plan, and the free tier watermarks exports.
 - GSAP: if `cdn.jsdelivr.net` is blocked for the renderer, copy `gsap.min.js` into the project

@@ -1,15 +1,15 @@
 #!/bin/bash
 # Setup script for the Video Studio project's cloud environment.
-# Paste this file's contents into the environment's "Setup script" box.
-# It runs before Claude starts and is cached, so threads start with HyperFrames ready.
+# Paste ONLY these two lines into the environment's "Setup script" box (one time). They fetch this repo and run
+# this file, so version bumps land through a reviewed PR here with no re-paste:
+#   git clone -q --depth 1 https://github.com/bennitka3/claude-video-editor /tmp/cve-setup
+#   bash /tmp/cve-setup/setup/cloud-setup.sh
 set -e
 export DO_NOT_TRACK=1
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# HyperFrames CLI (open source, renders HTML to MP4/MOV locally; needs Node 22+ and FFmpeg, both preinstalled)
-npm install -g hyperframes@latest
-
-# HyperFrames core skills -> ~/.claude/skills, which Claude loads in the session
-hyperframes skills update
+# HyperFrames CLI + skills, pinned to the security-scanned release (needs Node 22+, FFmpeg, git; preinstalled)
+bash "$HERE/install-hyperframes.sh"
 
 # GSAP, so compositions can use a local copy when the CDN is blocked
 mkdir -p /opt/hf-vendor && cd /opt/hf-vendor && npm install --silent gsap@3.14.2
